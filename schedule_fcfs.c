@@ -32,12 +32,14 @@ void add(char *name, int priority, int burst)
 // returns a list of task pointers of size id_counter
 Task **get_tasks()
 {
-    Task **tasks = malloc(sizeof(Task) * id_counter);
+    Task **tasks = malloc(sizeof(Task*) * id_counter);
 
     for (int i = id_counter - 1; i >= 0; i--)
     {
         tasks[i] = head->task;
+        struct node *prev= head;
         head = head->next;
+        free(prev);
     }
 
     return tasks;
@@ -73,7 +75,11 @@ void schedule()
         total_burst += burst;
 
         total_turnaround += total_burst;
+        free(tasks[i]); // no longer using task. free
+        tasks[i]=NULL;
     }
+    free(tasks); 
+    tasks=NULL;
 
 
     float average_waiting_time = total_waiting_time / number_of_tasks;
