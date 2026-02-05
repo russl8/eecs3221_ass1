@@ -10,7 +10,7 @@ echo "--------------- FCFS ---------------------"
 echo "Make FCFS"
 make fcfs
 echo "Running FCFS"
-fcfs schedule.txt > student-fcfs-output.txt
+./fcfs schedule.txt > student-fcfs-output.txt
 echo "Grading FCFS"
 
 DIFF=$(diff -wB correct-fcfs-output.txt student-fcfs-output.txt) 
